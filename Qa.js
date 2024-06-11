@@ -53,3 +53,64 @@ const hourly_rate = 20.0; // Hourly rate
 const overtime_multiplier = 1.5; // Overtime multiplier
 
 console.log(`$${calculateOvertimePay(start_time, end_time, hourly_rate, overtime_multiplier)}`); // Output the calculated pay
+
+
+
+/** 
+ * create a function to rotate a two-dimensional matrix of N * N interger elements num times,
+ * where if num is positive , the rotation is clockwise, and if not, counterclockwise.
+ * 
+ * Ex: arrRotate([[2,4],[0,0],1]) -> [[0,2],[0,4]]
+ *
+*/
+
+function rotateMatrix(matrix, num) {
+    // Function to rotate the matrix 90 degrees clockwise
+    const rotateClockwise = (mat) => {
+        const N = mat.length; // Get the size of the matrix
+        let result = Array.from({ length: N }, () => Array(N).fill(0)); // Initialize a new matrix
+        for (let i = 0; i < N; i++) { // Loop through rows
+            for (let j = 0; j < N; j++) { // Loop through columns
+                result[j][N - 1 - i] = mat[i][j]; // Place elements in rotated positions
+            }
+        }
+        return result; // Return the rotated matrix
+    };
+
+    // Function to rotate the matrix 90 degrees counterclockwise
+    const rotateCounterClockwise = (mat) => {
+        const N = mat.length; // Get the size of the matrix
+        let result = Array.from({ length: N }, () => Array(N).fill(0)); // Initialize a new matrix
+        for (let i = 0; i < N; i++) { // Loop through rows
+            for (let j = 0; j < N; j++) { // Loop through columns
+                result[N - 1 - j][i] = mat[i][j]; // Place elements in rotated positions
+            }
+        }
+        return result; // Return the rotated matrix
+    };
+
+    // Normalize num to be within the range of -3 to 3
+    const rotations = ((num % 4) + 4) % 4; // Ensure num is between 0 and 3 for simplicity
+
+    let rotatedMatrix = matrix; // Start with the original matrix
+
+    // Apply the correct number of rotations
+    for (let i = 0; i < rotations; i++) {
+        if (num > 0) {
+            rotatedMatrix = rotateClockwise(rotatedMatrix); // Rotate clockwise if num is positive
+        } else {
+            rotatedMatrix = rotateCounterClockwise(rotatedMatrix); // Rotate counterclockwise if num is negative
+        }
+    }
+
+    return rotatedMatrix; // Return the final rotated matrix
+}
+
+// Example usage:
+const matrix = [
+    [2, 4], // First row of the matrix
+    [0, 0]  // Second row of the matrix
+];
+const num = 1; // Number of rotations
+
+console.log(rotateMatrix(matrix, num)); 
